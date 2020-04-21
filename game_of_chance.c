@@ -158,22 +158,26 @@ void register_new_player()
 	printf("You have been given %u credits.\n", player.credits);
 }
 
+void update_player_data()
+{
+	int fd, i, read_uid;
+	char burned_byte;
 
+	fd = open(DATAFILE, O_RDWR);
+	if (fd == -1)
+		fatal("in update_player_data() while opening file");
+	read(fd, &read_uid, 4);
+	while(read_uid != player.uid)
+	{
+		for (i = 0; i < sizeof(User) - 4; i++)
+			read(fd, &burned_byte, 1);
+		read(fd, &read_uid, 4);
+	}
 
+	write(fd, &(player.credits), 4);
+	write(fd, &(player.highscore), 4);
+	write(fd, &(player.name), 160);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	close(fd);
+}
 
