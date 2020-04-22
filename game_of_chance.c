@@ -130,7 +130,7 @@ int get_player_data()
 	}
 	close(fd);
 	
-	if (ready_bytes < sizeof(User))
+	if (read_bytes < sizeof(User))
 		return -1;
 	else
 		player = entry;
