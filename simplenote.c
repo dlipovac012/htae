@@ -3,6 +3,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include "hacking.h"
 
 void usage(char* program_name, char* filename)
 {
@@ -53,26 +54,5 @@ int main(int argc, char **argv)
 	free(datafile);
 
 	return 0;
-}
-
-void fatal(char *message)
-{
-	char error_message[160];
-
-	strcpy(error_message, "[!!] Fatal Error ");
-	strncat(error_message, message, 143);
-	perror(error_message);
-	exit(-1);
-}
-
-void *error_checking_malloc(unsigned int size)
-{
-	void *ptr;
-	ptr = malloc(size);
-
-	if (ptr == NULL)
-		fatal("In error_checking_malloc() on memory allocation");
-
-	return ptr;
 }
 
